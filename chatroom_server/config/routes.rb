@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :events, except: [:new, :edit]
+  root to: "events#index"
+  get '/events/summary' => 'events#index'
+  post '/events/clear' => 'events#clear'
+  get ':username' => 'events#index'
+  resources :events, only: [:index, :show, :create, :update, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

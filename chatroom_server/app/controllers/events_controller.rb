@@ -4,8 +4,12 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
-
+    if params[:username]
+      @events = Event.where(user: params[:username]).first
+      #add .order('created_at asc')
+    else
+      @events = Event.all.order('created_at asc')
+    end
     render json: @events
   end
 
@@ -27,10 +31,16 @@ class EventsController < ApplicationController
     end
   end
 
+  # POST /events/clear
+  def clear
+    Event.all.destroy
+    head :no_content
+  end
+
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
-    @event = Event.find(params[:id])
+    # @event = Event.find(params[:id])
 
     if @event.update(event_params)
       head :no_content
