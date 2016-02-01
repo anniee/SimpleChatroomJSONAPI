@@ -1,23 +1,7 @@
 require 'test_helper'
-# require 'minitest/autorun'
-# require 'rest_client'
 require 'json'
 require 'factory_girl'
 FactoryGirl.find_definitions
-
-# def get
-#   response = RestClient.get("http://localhost:3000/events",
-#   {
-#     "Content-Type" => "application/json"
-#     })
-#   @data = JSON.parse(response.body)
-# end
-
-#   test "gets correct user name" do
-#     get
-#     assert_equal "Anne", @data['user']
-#   end
-
 
 class EventRequestTest < ActionDispatch::IntegrationTest
   event = FactoryGirl.create(:event)
@@ -28,6 +12,7 @@ class EventRequestTest < ActionDispatch::IntegrationTest
     get "/events/summary"
     assert_response :success
     @data = JSON.parse(response.body)
+    puts @data
   end
 
   test "gets correct user name" do
@@ -35,5 +20,6 @@ class EventRequestTest < ActionDispatch::IntegrationTest
     https!
     get "/events/#{event.id}"
     assert_equal "Anne", event['user']
+    assert_equal "enter", event['event_type']
   end
 end
