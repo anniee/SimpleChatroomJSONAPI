@@ -19,6 +19,11 @@ class EventsController < ApplicationController
     render json: @event
   end
 
+  # GET /events/summary
+  # def summary
+  #   render json: @events
+  # end
+
   # POST /events
   # POST /events.json
   def create

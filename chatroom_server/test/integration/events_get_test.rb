@@ -12,6 +12,7 @@ class EventRequestTest < ActionDispatch::IntegrationTest
     get "/events/summary"
     assert_response :success
     @data = JSON.parse(response.body)
+#fix this so checks body of response for accuracy
     puts @data
   end
 
@@ -22,4 +23,6 @@ class EventRequestTest < ActionDispatch::IntegrationTest
     assert_equal "Anne", event['user']
     assert_equal "enter", event['event_type']
   end
+
+  # TO-DO test get event, test post events/, test post events/clear, test get events with date range, test get events summary (ideally, with date range, not just specific date)
 end

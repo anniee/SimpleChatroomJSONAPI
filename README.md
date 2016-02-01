@@ -42,4 +42,7 @@ Ruby Version 2.1.2
   e.g.
 `curl -H "Content-Type: application/json" -X POST -d '{"event":{"user": "Annie", "event_type": "enter"}}' http://localhost:3000/events`
 
-  would yield a "201" successfully-created status
+  would yield a "201" successfully created status
+
+##Description of Application
+  This bare bones server handles requests related to "events" in a chatroom (edge cases are not currently considered). These events have attributes such as a user's name and the event_type, meaning what action the user is performing in the chatroom (e.g. entering the chatroom, messaging in it, high-fiving another user, leaving the chatroom).
