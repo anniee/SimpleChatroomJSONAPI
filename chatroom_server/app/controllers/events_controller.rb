@@ -4,8 +4,8 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    if params[:username]
-      @events = Event.where(user: params[:username]).first
+    if params[:user]
+      @events = Event.where(user: params[:user]).first
       #add .order('created_at asc')
     else
       @events = Event.all.order('created_at asc')
@@ -16,13 +16,25 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    render json: @event
+    if params[:id] == "clear"
+      @event.clear
+      @events = Event.all
+      @events.each { |event| event.destroy }
+
+      head :no_content
+    else
+      render json: @event
+    end
   end
 
   # GET /events/summary
-  # def summary
-  #   render json: @events
-  # end
+  def summary
+    puts params
+    @selected_date = [params[2]]
+    @second_selected_date = [params[3]]
+    @events = Event.where(:created_at => @selected_date.beginning_of_day..@second_selected_date.end_of_day)
+    render json: @events
+  end
 
   # POST /events
   # POST /events.json
@@ -30,6 +42,16 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
+      @event.enters
+      @event.leaves
+
+      highfive_counter = 0
+      if event["event_type"] == "highfive"
+        highfive_counter = highfive_counter + 1
+        return highfive_counter
+      else
+        0
+      end
       render json: @event, status: :created, location: @event
     else
       render json: @event.errors, status: :unprocessable_entity
@@ -38,7 +60,9 @@ class EventsController < ApplicationController
 
   # POST /events/clear
   def clear
-    Event.all.destroy
+    @events = Event.all
+    @events.each { |event| event.destroy }
+
     head :no_content
   end
 
@@ -64,11 +88,11 @@ class EventsController < ApplicationController
 
   private
 
-    def set_event
-      @event = Event.find(params[:id])
-    end
+  def set_event
+    @event = Event.find(params[:id])
+  end
 
-    def event_params
-      params.require(:event).permit(:date, :user, :type, :message, :otheruser)
-    end
+  def event_params
+    params.require(:event).permit(:date, :user, :type, :message, :otheruser)
+  end
 end

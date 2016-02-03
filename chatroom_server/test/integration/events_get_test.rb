@@ -13,7 +13,7 @@ class EventRequestTest < ActionDispatch::IntegrationTest
     assert_response :success
     @data = JSON.parse(response.body)
 #fix this so checks body of response for accuracy
-    puts @data
+    # puts @data
   end
 
   test "gets correct user name" do
