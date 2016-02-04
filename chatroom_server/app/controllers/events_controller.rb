@@ -9,7 +9,8 @@ class EventsController < ApplicationController
     else
       @events = Event.all.order('created_at asc')
     end
-    render json: @events
+
+    render json: @events, :only => [:id, :date, :user, :event_type, :message, :otheruser]
   end
 
   # GET /events/1
@@ -24,12 +25,13 @@ class EventsController < ApplicationController
     # else
     #   render json: @event
     # end
-    render json: @event.highfives
+    render json: @event
   end
 
   # GET /events/summary
   def summary
     @events = Event.all.order('created_at asc')
+    @events.each { |event|  event["highfives_count"] = event.highfives }
     render json: @events
   end
 

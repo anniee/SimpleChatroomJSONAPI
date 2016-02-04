@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160129033510) do
+ActiveRecord::Schema.define(version: 20160204020522) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "date"
@@ -19,8 +19,9 @@ ActiveRecord::Schema.define(version: 20160129033510) do
     t.string   "event_type"
     t.string   "message"
     t.string   "otheruser"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "highfives_count"
   end
 
 end
