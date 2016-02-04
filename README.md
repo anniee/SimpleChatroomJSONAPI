@@ -50,8 +50,11 @@ Ruby Version 2.1.2
 Currently:
 
   GET / or /events --> 200 OK status
+
   POST /events --> 201 Successfully Created status
+
   GET /events/summary --> 200 OK status, in progress events summary (e.g. highfive counter for specific date)
+
   POST /events/clear --> 204 No Content Status (i.e.g. clears data)
 
 To Tackle in Future:
@@ -64,4 +67,4 @@ To Tackle in Future:
 
   Error hash status
 
-  Validations for 'otheruser' when event type is 'highfive'
+  Validation for 'otheruser' when event type is 'highfive'
