@@ -16,15 +16,6 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    # if params[:id] == "clear"
-    #   @event.clear
-    #   @events = Event.all
-    #   @events.each { |event| event.destroy }
-
-    #   head :no_content
-    # else
-    #   render json: @event
-    # end
     render json: @event
   end
 
@@ -34,13 +25,30 @@ class EventsController < ApplicationController
     @events.each do |event|
       event["highfives_count"] = event.highfives
       eventsum = {}
-      if event.date == "1990-03-11T09:00:00.000Z" && eventsum["highfives_count"] == nil
+      if event.date == "1990-03-11T09:00:00.000Z" || "1990-03-11T09:00:00.000Z"
         eventsum["highfives_count"] = event.highfives
         @events = eventsum.merge!(date: event.date)
-      # else
-        # @events = eventsum.merge!(date: event.date)
       end
+
+
     end
+    # @events.each do |event|
+    #   # event["highfives_count"] = event.highfives
+    #   eventsum = {}
+    #   # if eventsum["highfives_count"] == nil
+    #   #   eventsum["highfives_count"] = event.highfives
+    #   #   @events = eventsum.merge!(date: event.date)
+    #   if event.date == "1990-03-11T09:00:00.000Z"
+    #     eventsum["highfives_count"] = event.highfives
+    #     @events1 = eventsum.merge!(date: event.date)
+    #   else
+    #     eventsum["highfives_count"] = event.highfives
+    #     @events2 = eventsum.merge!(date: event.date)
+    #   end
+    #   if @events1 && @events2
+    #     @events = @events1.deep_merge(@events2)
+    #   end
+    # end
     render json: @events
   end
 
@@ -53,13 +61,13 @@ class EventsController < ApplicationController
       @event.enters
       @event.leaves
 
-      highfive_counter = 0
-      if @event["event_type"] == "highfive"
-        highfive_counter = highfive_counter + 1
-        return highfive_counter
-      else
-        0
-      end
+      # highfive_counter = 0
+      # if @event["event_type"] == "highfive"
+      #   highfive_counter = highfive_counter + 1
+      #   return highfive_counter
+      # else
+      #   0
+      # end
       render json: @event, status: :created, location: @event
     else
       render json: @event.errors, status: :unprocessable_entity

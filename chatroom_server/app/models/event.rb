@@ -40,21 +40,37 @@ end
 public
 
 def highfives
-  @event = self
-  # @event =
-  # @event.respond_to?(:to_h)
-  # return @event.to_h
-  # return @event_hash
-  highfive_counter = 0
-  if @event["event_type"] == "highfive"
-    highfive_counter = highfive_counter + 1
-    return highfive_counter
-  else
-    0
-  end
 
-  # highfive_counter = 0
-  # if @event["event_type"] == "highfive"
+# when I'm calling highfives on event,
+# want to know
+#   if an event called highfives exists
+#     if a counter exists
+#       add one to counter
+#     else counter does not exist
+#       initialize a counter to 0
+#       add one to counter
+#   else
+#     return 0
+
+@event = self
+if @event["event_type"] == "highfive"
+  if defined? highfive_counter != nil
+    highfive_counter = highfive_counter + 1
+  else
+    highfive_counter = 1
+  end
+else
+  0
+end
+
+
+  # @event = self
+  # if defined? highfive_counter == nil
+  #   highfive_counter = 0
+  #   @event["event_type"] == "highfive"
+  #   highfive_counter = 1
+  #   return highfive_counter
+  # elsif defined? highfive_counter != nil
   #   highfive_counter = highfive_counter + 1
   #   return highfive_counter
   # else
