@@ -31,7 +31,16 @@ class EventsController < ApplicationController
   # GET /events/summary
   def summary
     @events = Event.all.order('created_at asc')
-    @events.each { |event|  event["highfives_count"] = event.highfives }
+    @events.each do |event|
+      event["highfives_count"] = event.highfives
+      eventsum = {}
+      if event.date == "1990-03-11T09:00:00.000Z" && eventsum["highfives_count"] == nil
+        eventsum["highfives_count"] = event.highfives
+        @events = eventsum.merge!(date: event.date)
+      # else
+        # @events = eventsum.merge!(date: event.date)
+      end
+    end
     render json: @events
   end
 
