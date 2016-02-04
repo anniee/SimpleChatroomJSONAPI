@@ -20,7 +20,7 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   test "should show event summary" do
-    get :summary, id: @event, date: @event.datetime
+    get :summary, id: @event, date: @event[:date]
     assert_response :success
   end
 

@@ -41,9 +41,18 @@ public
 
 def highfives
   @event = self
-  @event.respond_to?(:to_h)
-  return @event.to_h
+  # @event =
+  # @event.respond_to?(:to_h)
+  # return @event.to_h
   # return @event_hash
+  highfive_counter = 0
+  if @event["event_type"] == "highfive"
+    highfive_counter = highfive_counter + 1
+    return highfive_counter
+  else
+    0
+  end
+
   # highfive_counter = 0
   # if @event["event_type"] == "highfive"
   #   highfive_counter = highfive_counter + 1

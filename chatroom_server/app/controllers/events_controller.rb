@@ -6,7 +6,6 @@ class EventsController < ApplicationController
   def index
     if params[:user]
       @events = Event.where(user: params[:user]).first
-      #add .order('created_at asc')
     else
       @events = Event.all.order('created_at asc')
     end
@@ -16,23 +15,21 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    if params[:id] == "clear"
-      @event.clear
-      @events = Event.all
-      @events.each { |event| event.destroy }
+    # if params[:id] == "clear"
+    #   @event.clear
+    #   @events = Event.all
+    #   @events.each { |event| event.destroy }
 
-      head :no_content
-    else
-      render json: @event
-    end
+    #   head :no_content
+    # else
+    #   render json: @event
+    # end
+    render json: @event.highfives
   end
 
   # GET /events/summary
   def summary
-    puts params
-    @selected_date = [params[2]]
-    @second_selected_date = [params[3]]
-    @events = Event.where(:created_at => @selected_date.beginning_of_day..@second_selected_date.end_of_day)
+    @events = Event.all.order('created_at asc')
     render json: @events
   end
 
@@ -46,7 +43,7 @@ class EventsController < ApplicationController
       @event.leaves
 
       highfive_counter = 0
-      if event["event_type"] == "highfive"
+      if @event["event_type"] == "highfive"
         highfive_counter = highfive_counter + 1
         return highfive_counter
       else
